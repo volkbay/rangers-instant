@@ -8,6 +8,12 @@ A single-file browser app that turns digital photos into Instax / Polaroid style
 
 ## Sürümler / Releases
 
+### v1.2
+- Kâğıt fotoğraf çerçevenin altında duruyor gibi: çok hafif yuvarlatılmış fotoğraf penceresi ve çerçevenin fotoğrafa düşen iç gölgesi (Çerçeve panelinde "Kenar gölgesi" ayarı).
+- Tek kare indirme kendi bölümünde; siyah kenar ve baskı telafisi varsayılan olarak kapalı, telafi açıklaması netleştirildi.
+- Fotoğraf görünümünde yalnızca kesikli çizgi ipucu; format ve indirme ikonlarındaki kaymalar düzeltildi.
+- Bilgisayarda aşağı kaydırınca önizleme ve Fotoğraf/Kare seçici artık başlığın altında kalmıyor.
+
 ### v1.1
 - Tek kare indirme: yuvarlak köşe (varsayılan, köşe dışı şeffaf) veya köşeli; isteğe bağlı siyah kenar.
 - Marker yazı tipine Türkçe karakterler: Ş ş Ğ ğ İ ı ve noktalı i.

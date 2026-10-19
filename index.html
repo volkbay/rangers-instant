@@ -93,7 +93,7 @@
     .top.scrolled{padding-top:8px; padding-bottom:8px; box-shadow:0 0 0 100vw var(--bg), inset 0 -1px 0 var(--line);}
     .top.scrolled .brand img{height:42px;}
     .top.scrolled .brand p{display:none;}
-    .stage-wrap{top:calc(var(--hdr, 0px) + 12px);}
+    .studio .stage-wrap{top:calc(var(--hdr, 0px) + 12px);}
   }
   .brand{display:flex; align-items:center; gap:12px; min-width:0; flex:1;}
   .brand img{height:58px; width:auto; display:block; flex:none; transition:height .2s;}
@@ -138,7 +138,7 @@
   .stage-wrap{position:sticky; top:12px;}
   .stage{
     position:relative;
-    height:calc(100vh - 150px); min-height:420px;
+    height:calc(100vh - 184px); min-height:420px;
     background:var(--stage);
     background-image:radial-gradient(rgba(18,28,38,.07) 1px, transparent 1px);
     background-size:18px 18px;
@@ -289,7 +289,7 @@
     border:1px solid var(--line); background:var(--surface-2); border-radius:12px; cursor:pointer;
     padding:10px 6px 8px; display:flex; flex-direction:column; align-items:center; gap:6px; font-size:12px; font-weight:600; text-align:center; line-height:1.15;
   }
-  .fmt .shape{background:#fff; border:1px solid rgba(18,28,38,.25); position:relative; border-radius:1px;}
+  .fmt .shape{background:#fff; outline:1px solid rgba(18,28,38,.25); position:relative; border-radius:1px;}
   .fmt .shape i{position:absolute; background:var(--blue); opacity:.75;}
   .fmt[aria-pressed="true"]{border-color:var(--ink); background:var(--surface); box-shadow:inset 0 0 0 1px var(--ink);}
   .fmt small{font-weight:400; color:var(--muted); font-size:11px;}
@@ -301,10 +301,18 @@
   .qitem .star{color:var(--line);}
   .qitem .star[aria-pressed="true"]{color:var(--gold);}
 
+  .dl-group{border-top:1px dashed var(--line); background:var(--surface); gap:12px;}
+  .actions:has(+ .dl-group){border-radius:0;}
+  .act-head{display:flex; align-items:center; gap:8px; font-size:13.5px; font-weight:700;}
+  .act-head svg{width:17px; height:17px; flex:none; color:var(--muted);}
   .dl-opts{display:flex; gap:8px; align-items:stretch;}
   .dl-opts .seg{flex:2;}
   .dl-opts button{display:flex; align-items:center; justify-content:center; gap:7px;}
-  .dl-opts svg{width:17px; height:20px; flex:none;}
+  .ci{position:relative; flex:none; width:14px; height:18px; border:2px solid currentColor;}
+  .ci.r{border-radius:4px;}
+  .ci i{position:absolute; left:2px; right:2px; top:2px; bottom:5px; background:currentColor; opacity:.35; border-radius:1px;}
+  .ci.edge{border-color:#111; background:#fff;}
+  .ci.edge i{background:#111;}
   .edge-btn{flex:1; border:1px solid var(--line); background:var(--surface-2); border-radius:12px; padding:6px 10px; font-size:13px; font-weight:600; cursor:pointer; color:var(--muted); white-space:nowrap;}
   .edge-btn[aria-pressed="true"]{border-color:var(--ink); color:var(--ink); background:var(--surface); box-shadow:inset 0 0 0 1px var(--ink);}
   .check{display:flex; align-items:flex-start; gap:10px; font-size:13.5px; cursor:pointer; margin-top:12px;}
@@ -524,6 +532,7 @@
             </div>
           </div>
           <div class="field" data-slider="zoom"></div>
+          <div class="field" data-slider="frameShadow"></div>
           <div class="field">
             <div class="flabel"><span><span data-i18n="borderColor"></span> · <span class="sel-name" id="borderName"></span></span></div>
             <div class="swatches" id="swatches"></div>
@@ -586,14 +595,20 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
           <span data-i18n="addQueue"></span>
         </button>
+      </div>
+      <div class="actions dl-group">
+        <div class="act-head">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 4v12M6 10l6 6 6-6M4 20h16"/></svg>
+          <span data-i18n="dlHead"></span>
+        </div>
         <div class="dl-opts">
           <div class="seg" id="cornerSeg">
-            <button data-v="round" aria-pressed="true"><svg viewBox="0 0 22 26" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="2" width="16" height="22" rx="4.5"/><rect x="6" y="5" width="10" height="12" rx="1" fill="currentColor" stroke="none" opacity=".35"/></svg><span data-i18n="cornerRound"></span></button>
-            <button data-v="square" aria-pressed="false"><svg viewBox="0 0 22 26" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="2" width="16" height="22"/><rect x="6" y="5" width="10" height="12" fill="currentColor" stroke="none" opacity=".35"/></svg><span data-i18n="cornerSquare"></span></button>
+            <button data-v="round" aria-pressed="true"><span class="ci r"><i></i></span><span data-i18n="cornerRound"></span></button>
+            <button data-v="square" aria-pressed="false"><span class="ci"><i></i></span><span data-i18n="cornerSquare"></span></button>
           </div>
-          <button type="button" class="edge-btn" id="edgeBtn" aria-pressed="false"><svg viewBox="0 0 22 26"><rect x="2.5" y="1.5" width="17" height="23" rx="4" fill="#fff" stroke="#111" stroke-width="3"/><rect x="6" y="5" width="10" height="12" rx="1" fill="#111" opacity=".35"/></svg><span data-i18n="blackEdge"></span></button>
+          <button type="button" class="edge-btn" id="edgeBtn" aria-pressed="false"><span class="ci r edge"><i></i></span><span data-i18n="blackEdge"></span></button>
         </div>
-        <label class="check" style="margin:0; font-size:13px;"><input type="checkbox" id="dlComp" checked><span data-i18n="dlComp"></span></label>
+        <label class="check" style="margin:0; font-size:13px;"><input type="checkbox" id="dlComp"><span data-i18n="dlComp"></span></label>
         <button class="btn block" id="downloadCard" data-needs-photo>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 4v12M6 10l6 6 6-6M4 20h16"/></svg>
           <span data-i18n="downloadCard"></span>
@@ -716,7 +731,7 @@ const I18N = {
     emptyText:'Sürükle-bırak, yapıştır ya da seç. Taranmış, yan dönmüş fotoğraflar da olur — kenarlarını ve eğimini düzeltiriz.',
     pickPhoto:'Fotoğraf seç',
     panHint:'Sürükle: konumla · Tekerlek: yakınlaştır · Çift tık: sıfırla', panHintTouch:'Sürükle: konumla · İki parmak: yakınlaştır\nÇift dokun: sıfırla · {cmp} basılı tut: orijinal', tapReset:'dokun: sıfırla', clickReset:'tıkla: sıfırla',
-    photoHint:'Kesikli çizgi: kareye girecek alan · Tekerlek: yakınlaştır', photoHintTouch:'Kesikli çizgi: kareye girecek alan\nİki parmak: yakınlaştır',
+    photoHint:'Kesikli çizgi: kareye girecek alan', photoHintTouch:'Kesikli çizgi: kareye girecek alan',
     compare:'Basılı tut: orijinal',
     secPhoto:'Fotoğraf', secFrame:'Kare', secFilm:'Film görünümü', secPrep:'Baskıya hazırlık', secCaption:'Not',
     rotate:'Döndür', autoFix:'Kenar + eğim',
@@ -736,7 +751,7 @@ const I18N = {
     pNoneInfo:'Film efekti yok; yalnızca kare, otomatik düzeltme ve baskı ayarları.',
     pCustomInfo:'Ayarları değiştirdin — kendi tarifin.',
     exposure:'Pozlama', contrast:'Kontrast', saturation:'Doygunluk', warmth:'Sıcaklık', tint:'Ton (yeşil ↔ mor)',
-    fade:'Soluk siyahlar', halation:'Işıma (halation)', softness:'Lens yumuşaklığı', vignette:'Flaş vinyeti', grain:'Gren',
+    frameShadow:'Kenar gölgesi', fade:'Soluk siyahlar', halation:'Işıma (halation)', softness:'Lens yumuşaklığı', vignette:'Flaş vinyeti', grain:'Gren',
     autoLevels:'Otomatik seviye ve beyaz dengesi',
     printComp:'Baskı parlaklık telafisi',
     printCompHelp:'Parlak foto kâğıdı ekrandan yaklaşık %10–15 koyu basar. Bu ayar orta tonları ve gölgeleri açar; kaydedilen/basılan dosyaya uygulanır.',
@@ -772,7 +787,7 @@ const I18N = {
     captionStyle:'Yazı stili', fontLabel:'ETİKET', fontThermal:'Termal', ink:'Renk', inkAuto:'Otomatik', inkNavy:'Lacivert', inkRed:'Kırmızı',
     labelHelp:'ETİKET: kabartma etiket makinesi bandı gibi basılır; renk bandın rengini belirler.',
     cornerRound:'Yuvarlak köşe', cornerSquare:'Köşeli', blackEdge:'Siyah kenar', version:'Sürüm',
-    dlComp:'İndirirken baskı telafisini uygula (ekranda paylaşacaksan kapat)',
+    dlHead:'Tek kareyi indir', dlComp:'Baskı telafisi — indirdiğin dosyayı kendin basacaksan aç; ekranda veya dijital paylaşacaksan kapalı bırak',
     fOff:'Kapalı', fLast:'Son sayfa', fAll:'Tüm sayfalar',
     fillHelp:'Boşluklara önce ★ işaretli kare konur; o sığmazsa listedeki diğerleri denenir.',
     prefer:'Doldururken öncelikli', extra:'+{n} dolgu kopyası',
@@ -784,7 +799,7 @@ const I18N = {
     emptyText:'Drag & drop, paste or browse. Scanned or sideways photos are fine — we fix borders and tilt.',
     pickPhoto:'Choose photo',
     panHint:'Drag: reposition · Wheel: zoom · Double-click: reset', panHintTouch:'Drag: reposition · Pinch: zoom\nDouble-tap: reset · Hold {cmp}: original', tapReset:'tap to reset', clickReset:'click to reset',
-    photoHint:'Dashed line: area that goes in the frame · Wheel: zoom', photoHintTouch:'Dashed line: area that goes in the frame\nPinch: zoom',
+    photoHint:'Dashed line: area that goes in the frame', photoHintTouch:'Dashed line: area that goes in the frame',
     compare:'Hold: original',
     secPhoto:'Photo', secFrame:'Frame', secFilm:'Film look', secPrep:'Print prep', secCaption:'Caption',
     rotate:'Rotate', autoFix:'Border + tilt',
@@ -804,7 +819,7 @@ const I18N = {
     pNoneInfo:'No film effect — just the frame, auto-correction and print settings.',
     pCustomInfo:'You changed the settings — your own recipe.',
     exposure:'Exposure', contrast:'Contrast', saturation:'Saturation', warmth:'Warmth', tint:'Tint (green ↔ magenta)',
-    fade:'Faded blacks', halation:'Glow (halation)', softness:'Lens softness', vignette:'Flash vignette', grain:'Grain',
+    frameShadow:'Frame shadow', fade:'Faded blacks', halation:'Glow (halation)', softness:'Lens softness', vignette:'Flash vignette', grain:'Grain',
     autoLevels:'Auto levels & white balance',
     printComp:'Print brightness compensation',
     printCompHelp:'Glossy photo paper prints roughly 10–15% darker than a screen. This lifts midtones and shadows; it is applied to saved/printed files.',
@@ -840,13 +855,13 @@ const I18N = {
     captionStyle:'Lettering', fontLabel:'LABEL', fontThermal:'Thermal', ink:'Colour', inkAuto:'Auto', inkNavy:'Navy', inkRed:'Red',
     labelHelp:'LABEL: printed like embossed label-maker tape; the colour sets the tape colour.',
     cornerRound:'Rounded', cornerSquare:'Square', blackEdge:'Black edge', version:'Version',
-    dlComp:'Apply print compensation to the download (turn off for on-screen sharing)',
+    dlHead:'Download this frame', dlComp:'Print compensation — turn on if you will print the downloaded file yourself; leave off for screens and digital sharing',
     fOff:'Off', fLast:'Last page', fAll:'All pages',
     fillHelp:'Gaps are filled with the ★ frame first; if it does not fit, the others in the list are tried.',
     prefer:'Preferred for filling', extra:'+{n} filler copies',
   }
 };
-const APP_VERSION = '1.1';
+const APP_VERSION = '1.2';
 let lang = 'tr';
 const TOUCH = matchMedia('(pointer: coarse)').matches;
 function t(key, vars){
@@ -916,6 +931,7 @@ const FILM_KEYS = ['exposure','contrast','saturation','warmth','tint','fade','ha
 
 // slider specs: [min, max, step, default, unit]
 const SLIDERS = {
+  frameShadow:[0,100,1,40,''],
   angle:[-15, 15, 0.1, 0, '°'], trim:[0, 12, 0.1, 0, '%'], zoom:[100, 300, 1, 100, '%'],
   exposure:[-100,100,1,0,''], contrast:[-100,100,1,0,''], saturation:[-100,100,1,0,''], warmth:[-100,100,1,0,''], tint:[-100,100,1,0,''],
   fade:[0,100,1,0,''], halation:[0,100,1,0,''], softness:[0,100,1,0,''], vignette:[0,100,1,0,''], grain:[0,100,1,0,''],
@@ -1020,6 +1036,7 @@ function onSlider(key, v, live){
   if (key === 'angle'){ st.angle = v; buildPrepared(); toView('photo'); }
   else if (key === 'trim'){ st.trim = v; buildPrepared(); toView('photo'); }
   else if (key === 'zoom'){ st.zoom = v / 100; toView('card'); }
+  else if (key === 'frameShadow'){ st.frameShadow = v; toView('card'); }
   else if (FILM_KEYS.includes(key)){
     st.film[key] = v; toView('card');
     if (st.preset !== 'custom' && PRESETS[st.preset][key] !== v){ st.film.basePreset = st.preset; st.preset = 'custom'; buildPresets(); }
@@ -1486,6 +1503,14 @@ function pipelineParams(forPrint){
    Card rendering
    ========================================================= */
 function isDarkColor(hex){ const v = parseInt(hex.slice(1), 16); return (.299 * (v >> 16) + .587 * ((v >> 8) & 255) + .114 * (v & 255)) < 128; }
+// corner radius of the card (download option) and of the photo window, which on real film is
+// only slightly rounded
+const CORNER_MM = {mini:3, square:3, wide:3, polaroid:2, go:2, original:2.5};
+const WINDOW_R = .1;
+function roundRect(g, x, y, w, h, r){
+  r = Math.min(r, w / 2, h / 2);
+  g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath();
+}
 function renderCard(k, opts = {}){
   const G = cardGeometry();
   const W = Math.round(G.cw * k), H = Math.round(G.ch * k);
@@ -1504,11 +1529,26 @@ function renderCard(k, opts = {}){
     processPixels(id, pipelineParams(opts.print), k);
     pg.putImageData(id, 0, 0);
   }
+  // the glossy print sits under the frame: a slightly rounded window, and the frame's raised lip
+  // casts a soft shadow onto the photo (light from above, so the top edge is darker)
+  const wr = CORNER_MM[st.format] * WINDOW_R * k;
+  g.save();
+  g.beginPath(); roundRect(g, px, py, pw, ph, wr); g.clip();
   g.drawImage(pc, px, py);
-  // faint edge where the film mask overlaps the image
-  g.strokeStyle = isDarkColor(st.border) ? 'rgba(255,255,255,.08)' : 'rgba(0,0,0,.10)';
-  g.lineWidth = Math.max(1, k * .08);
-  g.strokeRect(px + g.lineWidth / 2, py + g.lineWidth / 2, pw - g.lineWidth, ph - g.lineWidth);
+  g.beginPath(); g.rect(px - 10 * k, py - 10 * k, pw + 20 * k, ph + 20 * k); roundRect(g, px, py, pw, ph, wr);
+  const sh = (st.frameShadow ?? 40) / 50;   // 50 = the v1.2 look
+  if (sh > 0){
+    g.fillStyle = '#000';
+    g.shadowColor = `rgba(0,0,0,${Math.min(1, .34 * sh)})`; g.shadowBlur = .45 * k; g.shadowOffsetY = .14 * k;
+    g.fill('evenodd');
+    g.shadowColor = `rgba(0,0,0,${Math.min(1, .14 * sh)})`; g.shadowBlur = 1.6 * k; g.shadowOffsetY = .3 * k;
+    g.fill('evenodd');
+  }
+  g.restore();
+  // faint edge where the frame meets the print
+  g.strokeStyle = isDarkColor(st.border) ? 'rgba(255,255,255,.10)' : 'rgba(0,0,0,.12)';
+  g.lineWidth = Math.max(1, k * .06);
+  g.beginPath(); roundRect(g, px, py, pw, ph, wr); g.stroke();
   drawCaption(g, G, k);
   return cv;
 }
@@ -1804,23 +1844,19 @@ $('addQueue').addEventListener('click', async () => {
   } finally { showBusy(false); }
 });
 // single-frame download: optional instant-film rounded corners (transparent outside) and a black edge
-const dl = Object.assign({round:true, edge:false}, recall('dl', {}));
-const CORNER_MM = {mini:3, square:3, wide:3, polaroid:2, go:2, original:2.5};
+const dl = Object.assign({round:true, edge:false}, recall('dl2', {}));
 function finishForDownload(c){
   const k = PX_PER_MM, w = c.width, h = c.height, r = dl.round ? CORNER_MM[st.format] * k : 0;
   const out = mk(w, h), g = out.getContext('2d');
-  const shape = () => {
-    g.beginPath(); g.moveTo(r, 0); g.arcTo(w, 0, w, h, r); g.arcTo(w, h, 0, h, r); g.arcTo(0, h, 0, 0, r); g.arcTo(0, 0, w, 0, r); g.closePath();
-  };
-  shape(); g.save(); g.clip(); g.drawImage(c, 0, 0);
+  g.beginPath(); roundRect(g, 0, 0, w, h, r); g.save(); g.clip(); g.drawImage(c, 0, 0);
   if (dl.edge){ g.lineWidth = .7 * k * 2; g.strokeStyle = '#111'; g.stroke(); }   // doubled width, clipped: the edge lies inside the card
   g.restore();
   return out;
 }
 setSeg('cornerSeg', dl.round ? 'round' : 'square');
 $('edgeBtn').setAttribute('aria-pressed', dl.edge);
-bindSeg('cornerSeg', v => { dl.round = v === 'round'; store('dl', dl); });
-$('edgeBtn').addEventListener('click', () => { dl.edge = !dl.edge; $('edgeBtn').setAttribute('aria-pressed', dl.edge); store('dl', dl); });
+bindSeg('cornerSeg', v => { dl.round = v === 'round'; store('dl2', dl); });
+$('edgeBtn').addEventListener('click', () => { dl.edge = !dl.edge; $('edgeBtn').setAttribute('aria-pressed', dl.edge); store('dl2', dl); });
 $('downloadCard').addEventListener('click', async () => {
   showBusy(true); await nextFrame();
   try{
