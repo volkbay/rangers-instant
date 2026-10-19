@@ -5,3 +5,14 @@ Dijital fotoğrafları Instax / Polaroid tarzı instant film karesine çeviren, 
 A single-file browser app that turns digital photos into Instax / Polaroid style instant film frames and lays them out on photo paper for printing. Everything runs locally in the browser.
 
 `index.html` is generated from `src/rangers-instant.html` in the main project by `publish.sh`.
+
+## Sürümler / Releases
+
+### v1.1
+- Tek kare indirme: yuvarlak köşe (varsayılan, köşe dışı şeffaf) veya köşeli; isteğe bağlı siyah kenar.
+- Marker yazı tipine Türkçe karakterler: Ş ş Ğ ğ İ ı ve noktalı i.
+- Telefonda iki satırlık, düzenli ipucu kutusu.
+- Bilgisayarda sabit başlık ve sekmeler, değişen değerlerde "sıfırla" ipucu, baskı listesinde not öncelikli isimler.
+
+### v1.0
+- İlk sürüm: Stüdyo (kenar/eğim düzeltme, film görünümleri, notlar) ve Baskı (çoklu kare yerleşimi).
