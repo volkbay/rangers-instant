@@ -8,6 +8,10 @@ A single-file browser app that turns digital photos into Instax / Polaroid style
 
 ## Sürümler / Releases
 
+### v1.3
+- İndirilen PNG ve baskı JPEG'lerine 300 dpi bilgisi yazılıyor; yazdırma uygulamaları gerçek boyutu (ör. 54 × 86 mm) doğru alıyor.
+- Kart köşe yarıçapı küçültüldü (Instax 1,5 mm, Polaroid 1 mm).
+
 ### v1.2
 - Kâğıt fotoğraf çerçevenin altında duruyor gibi: çok hafif yuvarlatılmış fotoğraf penceresi ve çerçevenin fotoğrafa düşen iç gölgesi (Çerçeve panelinde "Kenar gölgesi" ayarı).
 - Tek kare indirme kendi bölümünde; siyah kenar ve baskı telafisi varsayılan olarak kapalı, telafi açıklaması netleştirildi.
