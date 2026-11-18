@@ -8,6 +8,12 @@ A single-file browser app that turns digital photos into Instax / Polaroid style
 
 ## Sürümler / Releases
 
+### v1.4
+- Marka (yeni 6. bölüm), çerçevenin kalın kenarına, notun altına basılır. İki seçenek var:
+  - "Köşe imzası": küçük logo ve "made by RANGERS INSTANT" yazısı.
+  - "Şerit": logonun renklerinde ince bir bant. Üzerinde dik kask, dart, fotoğraf karesi ve aynı yazı tekrar eder; bant kart kenarlarında kesilir.
+- Belirginlik ayarlanabilir ve seçim hatırlanır. Marka önizlemede, indirilen karede ve baskıda görünür.
+
 ### v1.3
 - İndirilen PNG ve baskı JPEG'lerine 300 dpi bilgisi yazılıyor; yazdırma uygulamaları gerçek boyutu (ör. 54 × 86 mm) doğru alıyor.
 - Kart köşe yarıçapı küçültüldü (Instax 1,5 mm, Polaroid 1 mm).
