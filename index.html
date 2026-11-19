@@ -593,6 +593,7 @@
             <button data-v="none" aria-pressed="true" data-i18n="wmNone"></button>
             <button data-v="corner" aria-pressed="false" data-i18n="wmCorner"></button>
             <button data-v="band" aria-pressed="false" data-i18n="wmBand"></button>
+            <button data-v="clear" aria-pressed="false" data-i18n="wmClear"></button>
           </div>
           <div class="field" data-slider="wmAlpha" id="wmAlphaField"></div>
           <p class="help" data-i18n="wmHelp"></p>
@@ -799,7 +800,7 @@ const I18N = {
     bWhite:'Beyaz', bCream:'Krem', bBlack:'Siyah', bBlue:'Buz mavisi', bPink:'Pudra pembe', bVanilla:'Vanilya',
     captionStyle:'Yazı stili', fontLabel:'ETİKET', fontThermal:'Termal', ink:'Renk', inkAuto:'Otomatik', inkNavy:'Lacivert', inkRed:'Kırmızı',
     labelHelp:'ETİKET: kabartma etiket makinesi bandı gibi basılır; renk bandın rengini belirler.',
-    secWatermark:'Marka', wmNone:'Yok', wmCorner:'Köşe imzası', wmBand:'Şerit', wmAlpha:'Belirginlik',
+    secWatermark:'Marka', wmNone:'Yok', wmCorner:'Köşe imzası', wmBand:'Şerit', wmClear:'Şeffaf şerit', wmAlpha:'Belirginlik',
     wmHelp:'Çerçevenin kalın kenarına, notun altına basılır; önizlemede, indirilen karede ve baskıda görünür.',
     cornerRound:'Yuvarlak köşe', cornerSquare:'Köşeli', blackEdge:'Siyah kenar', version:'Sürüm',
     dlHead:'Tek kareyi indir', dlComp:'Baskı telafisi — indirdiğin dosyayı kendin basacaksan aç; ekranda veya dijital paylaşacaksan kapalı bırak',
@@ -869,7 +870,7 @@ const I18N = {
     bWhite:'White', bCream:'Cream', bBlack:'Black', bBlue:'Ice blue', bPink:'Powder pink', bVanilla:'Vanilla',
     captionStyle:'Lettering', fontLabel:'LABEL', fontThermal:'Thermal', ink:'Colour', inkAuto:'Auto', inkNavy:'Navy', inkRed:'Red',
     labelHelp:'LABEL: printed like embossed label-maker tape; the colour sets the tape colour.',
-    secWatermark:'Branding', wmNone:'None', wmCorner:'Corner mark', wmBand:'Ribbon', wmAlpha:'Opacity',
+    secWatermark:'Branding', wmNone:'None', wmCorner:'Corner mark', wmBand:'Ribbon', wmClear:'Clear ribbon', wmAlpha:'Opacity',
     wmHelp:'Printed on the frame\'s thick edge, below the caption; shows in the preview, the downloaded frame and prints.',
     cornerRound:'Rounded', cornerSquare:'Square', blackEdge:'Black edge', version:'Version',
     dlHead:'Download this frame', dlComp:'Print compensation — turn on if you will print the downloaded file yourself; leave off for screens and digital sharing',
@@ -1589,7 +1590,7 @@ function stripFrame(G){
 }
 // mm of the strip (from its outer edge) the brand mark takes; the caption keeps the rest
 function brandReserve(thick){
-  return st.wm.mode === 'corner' ? thick * .3 : st.wm.mode === 'band' ? thick * .32 : 0;
+  return st.wm.mode === 'corner' ? thick * .3 : st.wm.mode !== 'none' ? thick * .32 : 0;
 }
 // the snapshot from the logo: white print, blue sky, sun and red hills, drawn h tall around (0,0)
 function drawSnapIcon(g, h){
@@ -1615,7 +1616,7 @@ function drawBrand(g, G, k){
   g.save();
   g.translate(f.cx * k, f.cy * k); g.rotate(f.rot);
   g.globalAlpha = wm.alpha / 100;
-  if (wm.mode === 'corner') drawBrandCorner(g, f.len * k, f.thick * k); else drawBrandBand(g, f.len * k, f.thick * k);
+  if (wm.mode === 'corner') drawBrandCorner(g, f.len * k, f.thick * k); else drawBrandBand(g, f.len * k, f.thick * k, wm.mode === 'clear');
   g.restore();
 }
 // "made by" small and light, "RANGERS INSTANT" bold, on one baseline; returns the width
@@ -1642,15 +1643,18 @@ function drawBrandCorner(g, len, thick){
   if (logo.complete && logo.naturalWidth) g.drawImage(logo, x1 - lw, cy - lh / 2, lw, lh);
   brandLine(g, x1 - lw - lh * .25, cy + lh * .06, lh * .3, isDarkColor(st.border) ? '#ece6d6' : '#1f2a36', 'right');
 }
-function drawBrandBand(g, len, thick){
+// clear: only the colour stripes stay, no cream tape and no ink edges
+function drawBrandBand(g, len, thick, clear){
   const T = thick * .2, by = thick / 2 - thick * .07 - T / 2;    // ribbon height and centre
   const L = len + T * 2;
   g.translate(0, by);
-  g.fillStyle = WM_CREAM; g.fillRect(-L / 2, -T / 2, L, T);
+  if (!clear){ g.fillStyle = WM_CREAM; g.fillRect(-L / 2, -T / 2, L, T); }
   const e = T * .07, s = T * .07, sy = T / 2 - e - 3 * s;
   [WM_RED, WM_YELLOW, WM_BLUE].forEach((c, i) => { g.fillStyle = c; g.fillRect(-L / 2, sy + i * s, L, s + .5); });
-  g.fillStyle = WM_INK;
-  g.fillRect(-L / 2, -T / 2, L, e); g.fillRect(-L / 2, T / 2 - e, L, e); g.fillRect(-L / 2, sy - e * .5, L, e * .5);
+  if (!clear){
+    g.fillStyle = WM_INK;
+    g.fillRect(-L / 2, -T / 2, L, e); g.fillRect(-L / 2, T / 2 - e, L, e); g.fillRect(-L / 2, sy - e * .5, L, e * .5);
+  }
   // repeating: helmet, dart, snapshot, "made by RANGERS INSTANT"; the phase leaves a piece cut at each end
   const top = -T / 2 + e, ih = (sy - e * .5 - top) * .8, cy = (top + sy - e * .5) / 2;
   const hw = WM_HELMET.naturalWidth ? ih * WM_HELMET.naturalWidth / WM_HELMET.naturalHeight : ih * .8;
@@ -1660,7 +1664,7 @@ function drawBrandBand(g, len, thick){
     {w:hw, draw:() => { if (WM_HELMET.naturalWidth) g.drawImage(WM_HELMET, -hw / 2, -ih / 2, hw, ih); }},
     {w:dw * .85, draw:() => { g.rotate(-.5); if (WM_DART.naturalWidth) g.drawImage(WM_DART, -dw / 2, -dh / 2, dw, dh); }},   // laid along the ribbon
     {w:ih * .8, draw:() => { g.rotate(.1); drawSnapIcon(g, ih * .92); }},
-    {w:tw, draw:() => brandLine(g, -tw / 2, th * .04, th, WM_INK)},
+    {w:tw, draw:() => brandLine(g, -tw / 2, th * .04, th, clear && isDarkColor(st.border) ? '#ece6d6' : WM_INK)},
   ];
   const gap = T * .32, cycle = items.reduce((a, it) => a + it.w + gap, 0);
   let x = -L / 2 - cycle * .43;

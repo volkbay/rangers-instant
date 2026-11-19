@@ -12,6 +12,7 @@ A single-file browser app that turns digital photos into Instax / Polaroid style
 - Marka (yeni 6. bölüm), çerçevenin kalın kenarına, notun altına basılır. İki seçenek var:
   - "Köşe imzası": küçük logo ve "made by RANGERS INSTANT" yazısı.
   - "Şerit": logonun renklerinde ince bir bant. Üzerinde dik kask, dart, fotoğraf karesi ve aynı yazı tekrar eder; bant kart kenarlarında kesilir.
+  - "Şeffaf şerit": aynı şerit, krem zemin ve siyah çizgiler olmadan; yalnızca renkli çizgiler kalır.
 - Belirginlik ayarlanabilir ve seçim hatırlanır. Marka önizlemede, indirilen karede ve baskıda görünür.
 
 ### v1.3
