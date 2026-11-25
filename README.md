@@ -8,6 +8,16 @@ A single-file browser app that turns digital photos into Instax / Polaroid style
 
 ## Sürümler / Releases
 
+### v1.5
+- Baskı sayfalarında kareler tam piksele oturuyor ve 1:1 kopyalanıyor; önceden yarım piksel kayma ve %0,02 ölçek farkı yüzünden tüm kare yeniden örnekleniyor, hafif yumuşuyordu.
+- Baskı keskinleştirmesi artık yalnızca baskı dosyasına uygulanıyor (telafi gibi); önizlemede görmek için "Telafi ve keskinleştirmeyi önizlemede de göster".
+- Marka okunur boyutta: yazılar 300 dpi baskıda yaklaşık 5 punto, şerit ve logo büyüdü.
+- Marka daha net basılıyor: logo, kask ve dart tam piksel boyutunda önceden hazırlanıp hafifçe keskinleştiriliyor; yazılar, çizgiler ve ikonlar tam piksele oturuyor. Belirginlik varsayılanı %100.
+- Kenar gölgesi varsayılanı 80.
+- Bilgisayarda sayfayı ilk kaydırınca başlık küçülürken panelin zıplaması giderildi.
+- Baskı JPEG kalitesi %95'ten %98'e çıktı.
+- Yeni kâğıt boyutu: 15 × 21 cm.
+
 ### v1.4
 - Marka (yeni 6. bölüm), çerçevenin kalın kenarına, notun altına basılır. İki seçenek var:
   - "Köşe imzası": küçük logo ve "made by RANGERS INSTANT" yazısı.
